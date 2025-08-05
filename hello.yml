@@ -1,0 +1,7 @@
+---
+- name: Greet 
+  hosts: all
+  tasks:
+    - name: Welcome message
+      debug:
+        msg: hello world welcome to ansible From {{ ansible_facts.hostname }} and Ipv4 address {{ ansible_facts.default_ipv4.address }} 

@@ -1,0 +1,3 @@
+- name: only complete  ipv4 address
+  debug:
+    msg: Here is the Complete ipv4 address Details of {{ ansible_facts. hostname }} of {{ ansible_facts.default_ipv4 }}

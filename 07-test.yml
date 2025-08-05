@@ -1,0 +1,11 @@
+---
+- name: greet user
+  hosts: node1
+  vars_prompt:
+    - name: username
+      prompt: what is your name 
+      private: no
+  tasks:
+    - name: greet user
+      debug:
+        msg: hello {{ username }}

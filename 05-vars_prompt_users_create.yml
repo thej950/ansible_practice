@@ -1,0 +1,17 @@
+---
+- name: Creating a User, Username 
+  hosts: all
+
+  vars_prompt:
+    - name: username
+      prompt: Please enter Your name...?
+      private: no
+    - name: password
+      prompt: Enter Password for to Login
+      private: yes
+
+  tasks:
+    - name: user create 
+      user:
+        name: "{{ username }}"
+        password: "{{ password }}"

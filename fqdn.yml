@@ -1,0 +1,7 @@
+---
+- name: get fqdn of managed nodes
+  hosts: all
+  tasks:
+    - name: get fqdn of managed nodes
+      debug:
+        msg: This is the Managed Node FQDN = {{ ansible_facts.fqdn }}

@@ -1,0 +1,38 @@
+- name: Create or Delete a User
+  hosts: all
+  become: true
+
+  vars_prompt:
+    - name: action
+      prompt: "Do you want to create or delete a user? (create/delete)"
+      private: no
+
+    - name: username
+      prompt: "Enter the username"
+      private: no
+
+    - name: password
+      prompt: "Enter the password (only used if creating user)"
+      private: yes
+      when: action == "create"
+
+  tasks:
+    - name: Hash the password (only if creating user)
+      set_fact:
+        hashed_password: "{{ password | password_hash('sha512') }}"
+      when: action == "create"
+
+    - name: Create the user
+      user:
+        name: "{{ username }}"
+        password: "{{ hashed_password }}"
+        state: present
+      when: action == "create"
+
+    - name: Delete the user
+      user:
+        name: "{{ username }}"
+        state: absent
+        remove: yes   # Remove home directory
+      when: action == "delete"
+

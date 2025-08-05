@@ -1,0 +1,23 @@
+- name: Creating a User, Username
+  hosts: all
+  become: true
+
+  vars_prompt:
+    - name: username
+      prompt: Please enter your name...?
+      private: no
+
+    - name: password
+      prompt: Enter {{ username }}'s password for login
+      private: yes
+
+  tasks:
+    - name: Hash the password
+      ansible.builtin.set_fact:
+        hashed_password: "{{ password | password_hash('sha512') }}"
+
+    - name: Creating User
+      ansible.builtin.user:
+        name: "{{ username }}"
+        password: "{{ hashed_password }}"
+

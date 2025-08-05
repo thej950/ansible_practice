@@ -1,0 +1,40 @@
+- name: Create or Delete a User
+  hosts: all
+  become: true
+
+  vars_prompt:
+    - name: action
+      prompt: "Do you want to create or delete a user? (create/delete)"
+      private: no
+
+    - name: username
+      prompt: "Enter the username"
+      private: no
+
+  tasks:
+    - name: Prompt for password only if creating user
+      ansible.builtin.pause:
+        prompt: "Enter the password for user (input hidden):"
+        echo: no
+      register: user_password
+      when: action == "create"
+
+    - name: Set hashed password
+      set_fact:
+        hashed_password: "{{ user_password.user_input | password_hash('sha512') }}"
+      when: action == "create"
+
+    - name: Create the user
+      ansible.builtin.user:
+        name: "{{ username }}"
+        password: "{{ hashed_password }}"
+        state: present
+      when: action == "create"
+
+    - name: Delete the user
+      ansible.builtin.user:
+        name: "{{ username }}"
+        state: absent
+        remove: yes
+      when: action == "delete"
+

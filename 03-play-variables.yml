@@ -1,0 +1,10 @@
+---
+- name: working with variables 
+  hosts: node1
+  vars:
+    greeting: Hello World
+    greeting1: you looking Good
+  tasks:
+    - name: printing variable 
+      debug:
+        msg: Hai Beautiful {{ greeting1 }}

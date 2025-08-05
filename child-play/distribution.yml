@@ -1,0 +1,3 @@
+- name: to display os distribution here on node1 
+  debug:
+    msg: Here is the OS Distribution {{ ansible_facts.distribution }}

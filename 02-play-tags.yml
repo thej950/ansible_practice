@@ -1,0 +1,17 @@
+---
+- name: playbook with tags implemented 
+  hosts: all
+  tasks:
+    - name: install git 
+      package:
+        name: git 
+        state: absent
+      tags: git
+    
+    - name: install tmux
+      apt:
+        name: tmux
+        state: present
+      tags: tmux
+
+

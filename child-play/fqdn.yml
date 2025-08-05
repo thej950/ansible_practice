@@ -1,0 +1,3 @@
+- name: pring fqdn only
+  debug:
+    msg: Here is the FQDN of managed hosts {{ ansible_facts.fqdn }}
