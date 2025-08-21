@@ -1,0 +1,23 @@
+---
+- name: test play 
+  hosts: localhost
+  tasks:
+    - name: test
+      debug:
+        msg: "Hello World"
+
+    - name: test
+      debug:
+        msg: "Hello World"
+
+    - name: test
+      debug:
+        msg: "Hello World"
+
+    - name: test
+      debug:
+        msg: "Hello World"
+
+    - name: test
+      debug:
+        msg: "Hello World"
