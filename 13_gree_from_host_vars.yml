@@ -1,0 +1,8 @@
+---
+- name: lets greet by help of nodes
+  hosts: node1
+  tasks:
+    - name: greeting from nodes
+      debug:
+        msg: Hello {{ greet }}
+

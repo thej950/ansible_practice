@@ -1,0 +1,14 @@
+---
+- name: Installing S/W specific to Nodes
+  hosts: all
+  tasks:
+    - name: Install package based on host
+      package:
+        name: "{{ pkg1 }}"
+        state: absent
+    - name: ensure sevice started
+      service:
+        name: "{{ service }}"
+        state: started
+        enabled: true
+

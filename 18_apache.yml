@@ -1,0 +1,27 @@
+---
+- name: install apache if not installed 
+  hosts: node1 
+  tasks:
+    - name: check httpd already installed 
+      command: rpm -q httpd
+      register: check_apache
+      ignore_errors: true # continue even httpd not installed 
+
+    - name: install apache
+      package:
+        name: httpd
+        state: present
+      when: check_apache.rc != 0 # install only if not found apache
+
+    - name: enable and start apache
+      service:
+        name: httpd
+        state: started
+        enabled: true
+      when: check_apache.rc != 0 # start only installed 
+
+    - name: print apache installation status
+      debug:
+        msg: "Apache was already installed"
+      when: check_apache.rc == 0  
+

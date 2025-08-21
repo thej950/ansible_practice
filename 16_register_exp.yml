@@ -1,0 +1,10 @@
+---
+- name: working on register 
+  hosts: all
+  tasks:
+    - name: run a command 
+      command: uptime
+      register: server_time
+    - name: pring time of server
+      debug:
+        msg: Time is {{ server_time }}

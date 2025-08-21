@@ -1,0 +1,8 @@
+---
+- name: installation Software Specific Nodes 
+  hosts: all
+  tasks:
+    - name: installing Software
+      package:
+        name: "{{ pkg }}"
+        state: absent

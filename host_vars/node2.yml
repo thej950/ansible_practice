@@ -1,0 +1,5 @@
+message: I am node2 App-Server
+greet: Good Day...! i am node2
+pkg: tmux
+pkg1: tomcat10
+service: tomcat10

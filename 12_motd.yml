@@ -1,0 +1,9 @@
+---
+- name: set motd on all hosts
+  hosts: all
+  tasks:
+    - name: Set motd = value of message variables
+      copy:
+        content: "{{ message }}"
+        dest: /etc/motd
+

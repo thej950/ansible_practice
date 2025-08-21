@@ -1,0 +1,7 @@
+---
+- name: working with custome facts with node1 
+  hosts: node1 
+  tasks:
+    - name: lets access custome facts on node1
+      debug:
+        msg: Hello My name is {{ ansible_local.cool.fun.user }}. I am Curently staying in {{ ansible_local.cool.fun.city }} in {{ ansible_local.cool.fun.state }}

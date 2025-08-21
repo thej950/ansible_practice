@@ -1,0 +1,10 @@
+---
+- name: print prime numbers 
+  hosts: node1 
+  vars:
+    prime: [2,3,5,7,9]
+  tasks:
+    - name: show first five prime numbers
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ prime }}"

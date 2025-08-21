@@ -1,0 +1,15 @@
+---
+- name: working with register with wnen
+  hosts: all
+  tasks:
+    - name: check if files exist
+      stat:
+        path: /home/thej/hello.txt
+      register: file1
+
+    - name: lets create a hello.txt
+      file:
+        path: /home/thej/hello.txt
+        state: touch
+      when: not file1.stat.exists
+

@@ -1,0 +1,8 @@
+message: I am node1 web-server
+greet: Good day...! I am node1 
+pkg: git
+pkg1: nginx
+service: nginx
+
+
+ 

@@ -1,0 +1,59 @@
+---
+- name: Ensure nginx installed and listening port 80
+  hosts: node1 
+  tasks:
+    - name: chek nginx installed 
+      command: which nginx
+      register: check_nginx
+      ignore_errors: yes
+
+    - name: print status if nginx already installed
+      debug:
+        msg: nginx already installed
+      when: check_nginx.rc == 0
+
+    - name: install nginx if not present 
+      package:
+        name: nginx
+        state: present
+        update_cache: yes
+      when: check_nginx.rc != 0 
+      register: install_status
+
+    - name: Ensure nginx service is started and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      when: install_status is succeeded or check_nginx.rc == 0 
+
+    - name: check nginx service status
+      shell: systemctl is-active nginx
+      register: nginx_svc_status
+      changed_when: false
+
+    - name: print if nginx service is active
+      debug:
+        msg: nginx service is running 
+      when: nginx_svc_status.stdout == "active"
+
+    - name: restart nginx if not active
+      service:
+        name: nginx
+        state: restarted
+      when: nginx_svc_status.rc != "active"
+
+    - name: check port 80 is listening
+      shell: ss -tuln | grep ':80'
+      register: port_check
+      changed_when: false
+      ignore_errors: yes
+
+    - name: print port 80 listening status
+      debug:
+        msg: port nginx 80 is listening and service traffic 
+      when: port_check.rc == 0 
+    - name: fail if port is 80 not open 
+      fail:
+        msg: port 80 is not listening. please check firewall or nginx config
+      when: port_check.rc != 0

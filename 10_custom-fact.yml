@@ -1,0 +1,15 @@
+---
+- name: working on custome facts to set on managed node1
+  hosts: node1 
+  tasks:
+    - name: lets create a facts.d directory into managed node1 in /etc/ansible/facts.d
+      file:
+        path: /etc/ansible/facts.d
+        owner: thej
+        mode: 0775
+        state: directory
+          
+    - name: lets copy cool.facts file into managed node1 into facts.d directory for custome facts 
+      copy:
+        src: ./cool.fact
+        dest: /etc/ansible/facts.d/
